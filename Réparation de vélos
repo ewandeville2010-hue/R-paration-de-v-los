@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Réparation de vélo au camping du provençal</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  display: flex;
+  height: 100vh;
+}
+
+/* Menu latéral */
+#sidebar {
+  width: 200px;
+  background: #25FDE9;
+  color: white;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+#sidebar h2 {
+  margin-top: 0;
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+#sidebar button {
+  background: #FF00FF;
+  border: none;
+  color: white;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: left;
+}
+
+/* Contenu principal */
+#main {
+  flex: 1;
+  padding: 20px;
+  background: <img src="C:\Users\deville\Downloads\IMG-20260322-WA0020.jpg" alt="Camping" width="300">
+  overflow-y: auto;
+}
+
+.card {
+  background: white;
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 10px;
+}
+
+button {
+  cursor: pointer;
+}
+
+input[type="text"], input[type="date"], input[type="time"] {
+  padding: 8px;
+  margin-bottom: 10px;
+  width: 200px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.admin {
+  margin-top: 30px;
+  background: #eee;
+  padding: 10px;
+  border-radius: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<div id="sidebar">
+  <h2>Menu</h2>
+  <button onclick="showSection('services')">Services</button>
+  <button onclick="showSection('rdv')">Prendre RDV</button>
+  <button onclick="showSection('admin')">Mode Gérant</button>
+  <button onclick="showSection('admin')">A propos de moi</button>
+  <button onclick="showSection('admin')">Achat de matériel</button>
+</div>
+
+<div id="main">
+  <!-- Services -->
+  <div id="services" class="section">
+    <h2>Nos services :</h2>
+    <div class="card">Réparation crevaison<br><small>Paiement libre</small></div>
+    <div class="card">Révision complete<br><small>Paiement libre</small></div>
+    <div class="card">Réglage freins<br><small>Paiement libre</small></div>
+    <div class="card">Entretien VTT<br><small>Paiement libre</small></div>
+	<div class="card">Restauration de vélo<br><small>Paiement libre</small></div>
+	<div class="card">Nettoyage complet<br><small>Paiement libre</small></div>
+	<div class="card">Nettoyage des légers points de rouille<br><small>Paiement libre</small></div>
+	<div class="card">Pose d'accesoires (matériel à fournir)<br><small>Paiement libre</small></div>
+	<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image de fond</title>
+    <style>
+        /* Applique l'image de fond à toute la page */
+        body {
+            margin: 0; /* Supprime les marges par défaut */
+            height: 100vh; /* Hauteur = 100% de la fenêtre */
+            background-image: url('https://tse1.mm.bing.net/th/id/OIP.aGuX6qBCB80VJqPnzOz_dQHaEK?rs=1&pid=ImgDetMain&o=7&rm=3'); /* Chemin vers l'image */
+            background-size: cover; /* L'image couvre toute la zone */
+            background-position: center; /* Centrage de l'image */
+            background-repeat: no-repeat; /* Pas de répétition */
+            background-attachment: fixed; /* L'image reste fixe au défilement */
+        }
+
+        /* Exemple de texte par-dessus */
+        h1 {
+            color: white;
+            text-align: center;
+            padding-top: 40vh;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+        }
+    </style>
+</head>
+<body>
+    <h1>Bienvenue sur ma page</h1>
+</body>
+</html>
+
+  </div>
+
+  <!-- Prendre RDV -->
+  <div id="rdv" class="section" style="display:none;">
+    <h2>Prendre un rendez-vous:</h2>
+	<h3>Merci de vous rendre à l'entrée du camping près de la guérite du gardien à l'heure du rendez-vous</h3>
+    <input type="text" id="name" placeholder="Votre nom"><br>
+    <input type="date" id="date"><br>
+    <input type="time" id="time"><br>
+    <button onclick="addRDV()">Réserver</button>
+
+    <h2>Rendez-vous</h2>
+    <div id="rdvList"></div>
+  </div>
+
+  <!-- Mode Gérant -->
+  <div id="admin" class="section" style="display:none;">
+    <h2>Mode Gérant</h2>
+    <p>Cliquer sur les boutons pour gérer les RDV</p>
+  </div>
+</div>
+
+<script>
+// Gestion du menu
+function showSection(sectionId){
+  document.querySelectorAll('.section').forEach(sec=>{
+    sec.style.display='none';
+  });
+  document.getElementById(sectionId).style.display='block';
+}
+
+// RDV
+let rdvs = JSON.parse(localStorage.getItem("rdvs")) || [];
+
+function addRDV() {
+  let name = document.getElementById("name").value;
+  let date = document.getElementById("date").value;
+  let time = document.getElementById("time").value;
+
+  if(!name || !date || !time){
+    alert("Veuillez remplir tous les champs");
+    return;
+  }
+
+  let rdv = { name, date, time, status: "En attente" };
+  rdvs.push(rdv);
+  localStorage.setItem("rdvs", JSON.stringify(rdvs));
+  displayRDV();
+}
+
+function displayRDV() {
+  let list = document.getElementById("rdvList");
+  list.innerHTML = "";
+  rdvs.forEach((rdv, index) => {
+    list.innerHTML += `
+      <div class="card">
+        ${rdv.name} - ${rdv.date} à ${rdv.time} <br>
+        Statut : ${rdv.status} <br><br>
+        <button onclick="approve(${index})">✅ Accepter le rendez-vous</button>
+        <button onclick="move(${index})">🔁 Déplacer un rendez-vous</button>
+      </div>
+    `;
+  });
+}
+
+function approve(i) {
+  rdvs[i].status = "Accepté";
+  localStorage.setItem("rdvs", JSON.stringify(rdvs));
+  displayRDV();
+}
+
+function move(i) {
+  let newDate = prompt("Nouvelle date (YYYY-MM-DD)");
+  let newTime = prompt("Nouvelle heure");
+  if(newDate && newTime){
+    rdvs[i].date = newDate;
+    rdvs[i].time = newTime;
+    rdvs[i].status = "Modifié";
+    localStorage.setItem("rdvs", JSON.stringify(rdvs));
+    displayRDV();
+  }
+}
+
+// Affiche les RDV dès le chargement
+displayRDV();
+</script>
+
+</body>
+</html>
